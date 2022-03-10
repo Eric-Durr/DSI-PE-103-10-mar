@@ -9,6 +9,22 @@ function isPalindrome(word: string): boolean {
   return true;
 }
 
+/**
+ * # palindromeCount | primary function
+ * Counts characters in longest palindrome given within an array
+ *
+ * @param words given words list to check
+ * @returns length of longest palindrome or undefined
+ *
+ * ## Usage
+ * ```TypeScript
+ * palindromeCount(['TACOCAT', '1001'])
+ * // returns 7
+ *
+ * palindromeCount(['hello', 'World'])
+ * // returns undefined
+ * ```
+ */
 export function palindromeCount(words: string[]): number | undefined {
   const pali: string[] = [];
   words.forEach((word) => {
