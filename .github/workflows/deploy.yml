@@ -1,0 +1,33 @@
+name: Deploy report
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy-report:
+    runs-on: ubuntu-latest
+    concurrency: ci-${{ github.ref }}
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: docs # The folder the action should deploy.
+
+  deploy-docs:
+    runs-on: ubuntu-latest
+    name: Deploying documentation to surge
+    steps:
+      - uses: actions/checkout@v1
+      - run: npm install
+      - run: npm run docs
+      - name: Install surge and fire deployment
+        uses: actions/setup-node@v1
+        with:
+          node-version: 8
+      - run: npm install -g surge
+      - run: surge ./doc dsi-p03-code-docs.surge.sh --token ${{ secrets.SURGE_TOKEN }}
